@@ -6,7 +6,7 @@ let citas = null;
 let websocket = null;
 
 
-document.addEventListener("DOMContentLoaded", async (e) =>{
+window.onload =  async (e) =>{
     cedulaMedico = localStorage.getItem("cedula");
     console.log(cedulaMedico);
     const request = {
@@ -23,11 +23,11 @@ document.addEventListener("DOMContentLoaded", async (e) =>{
 
     }
     const usuarioString = JSON.stringify(usuario);
-
+    console.log(usuarioString)
     websocket = new WebSocket(`ws://localhost:8080/ServidorNotificaciones/websocketendpoint/${usuarioString}`);
 
     websocket.onopen = evt =>{
-        websocket.send(usuarioString);
+        //websocket.send(usuarioString);
     }
     
 
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", async (e) =>{
     llenarCitas();
 
 
-})
+}
 
 function llenarCitas(){
     citas.forEach(cita => {
@@ -48,10 +48,10 @@ function llenarCitas(){
         pPaciente.textContent = `NSS Paciente: ${nssPaciente}`;
         const btnSolicitar = document.createElement("button")
         btnSolicitar.addEventListener("click", (e) =>{
-            websocket.send({
+            websocket.send(JSON.stringify({
                 destinatario: nssPaciente,
-                tipo: "Solicitar Expediente"
-            })
+                evento: "Solicitar Expediente"
+            }))
         })
         btnSolicitar.textContent = "Socitar Expediente"
         divCita.appendChild(pCita);
