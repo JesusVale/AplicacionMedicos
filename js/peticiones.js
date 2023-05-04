@@ -15,7 +15,7 @@ async function verificarCedula(cedula){
 async function getCitas(request){
     try{
         const params = new URLSearchParams(request);
-        const citasJson = await fetch(`${URL}/citas?${params}`);
+        const citasJson = await fetch(`http://localhost:8085/citas?${params}`);
         const citas = await citasJson.json();
         return citas;
     } catch(error){
