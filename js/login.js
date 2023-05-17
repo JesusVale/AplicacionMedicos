@@ -7,13 +7,19 @@ formLogin.addEventListener("submit", iniciarSesion);
 async function iniciarSesion(e){
     e.preventDefault();
     const cedula = document.querySelector(".form__input--cedula").value;
-    const verificacion = await verificarCedula(cedula);
-
-    if(verificacion){
-        localStorage.setItem("cedula", cedula)
+    let respuesta;
+    try {
+        respuesta = await verificarCedula(cedula);
+        //Extrae todos los datos del medico y los guarda en LocalStorage
+        const {body} = respuesta
+        console.log(respuesta)
+        console.log(body)
+        localStorage.setItem("cedula", body.cedulaMedico)
+        localStorage.setItem("nombre", body.nombreMedico)
+        localStorage.setItem("token", body.token)
         window.location.href = "../inicio.html"
-    } else{
-        alert("Cedula no válida")
+    } catch (error) {
+        //Si lanza un error lo muestra con un alert()
+        alert(error)
     }
-
 }

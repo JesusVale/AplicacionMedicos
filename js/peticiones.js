@@ -3,13 +3,15 @@ const URL = "http://localhost:8094";
 
 //Verificar Cedula
 async function verificarCedula(cedula){
-    try{
-        const verificacionJSON = await fetch(`${URL}/verificar/${cedula}`)
-        const resultado = await verificacionJSON.json();
-        return resultado
-    } catch(error){
-        console.log(error);
+    const verificacionJSON = await fetch(`${URL}/verificar/cedula/${cedula}`)
+    const resultado = await verificacionJSON.json();
+    const status = verificacionJSON.status;
+
+    if(status !== 200){
+        throw new Error(resultado.message)
     }
+
+    return resultado
 }
 
 async function getCitas(request){

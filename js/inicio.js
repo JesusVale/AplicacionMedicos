@@ -1,13 +1,21 @@
 import { getCitas } from "./peticiones.js";
 
 const citasContenedor = document.querySelector(".citas");
+const titulo = document.querySelector(".titulo");
+const cedula = document.querySelector(".cedula");
+
 let cedulaMedico = null;
+let nombreMedico = null;
 let citas = null;
 let websocket = null;
 
 
 window.onload =  async (e) =>{
     cedulaMedico = localStorage.getItem("cedula");
+    nombreMedico = localStorage.getItem("nombre");
+    titulo.innerHTML = "Bienvenido Dr. " + nombreMedico;
+    cedula.innerHTML = "Cédula: " + cedulaMedico;
+
     console.log(cedulaMedico);
     const request = {
         nombreHospital: "CentroMedico",
